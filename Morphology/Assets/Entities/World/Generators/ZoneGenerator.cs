@@ -10,7 +10,7 @@ public class ZoneGenerator : MonoBehaviour {
   private int currentZone;
 
   private void Awake() {
-    zonesList.Add(GenerateRandomZone().GetComponent<ZoneController>());
+    zonesList.Add(GenerateStartZone().GetComponent<ZoneController>());
     currentZone = 0;
     zonesList.Add(GenerateZoneFromExit(zonesList[0]).GetComponent<ZoneController>());
     zonesList.Add(GenerateZoneFromExit(zonesList[1]).GetComponent<ZoneController>());
@@ -26,8 +26,9 @@ public class ZoneGenerator : MonoBehaviour {
     return newZone;
   }
 
-  private GameObject GenerateRandomZone() {
-    GameObject newZonePrefab = prefabs[Random.Range(0, prefabs.Count)];
+  private GameObject GenerateStartZone() {
+    List<GameObject> eligibleZones = prefabs.FindAll((GameObject zonePrefab) => ZoneMatchEntrance(zonePrefab, HUB_POSITIONS.Bottom));
+    GameObject newZonePrefab = eligibleZones[Random.Range(0, eligibleZones.Count)];
     GameObject newZone = GenerateZone(newZonePrefab);
     PositionZone(newZone, new Vector3(0, 0, 1));
     return newZone;
