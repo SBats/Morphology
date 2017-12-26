@@ -72,11 +72,14 @@ public class PlayerController : MonoBehaviour {
 	}
 
 
-	void onTriggerEnterEvent (Collider2D col)
+	void onTriggerEnterEvent (Collider2D collider)
 	{
-		Debug.Log ("onTriggerEnterEvent: " + col.gameObject.name);
-		if (col.tag == "KillPlane") {
+		Debug.Log ("onTriggerEnterEvent: " + collider.name);
+		if (collider.tag == "KillPlane") {
 			Respawn ();
+		}
+		if (collider.tag == "Entrance") {
+			collider.GetComponent<EntranceController>().OnPlayerEnter();
 		}
 	}
 

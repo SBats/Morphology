@@ -16,12 +16,18 @@ public class ZoneGenerator : MonoBehaviour {
     zonesList.Add(GenerateZoneFromExit(zonesList[1]).GetComponent<ZoneController>());
   }
 
+  public void OnZoneEntered(ZoneController zone) {
+    int zoneIndex = zonesList.FindIndex(listElement => listElement.GetInstanceID() == zone.GetInstanceID());
+    zonesList.Add(GenerateZoneFromExit(zonesList[zonesList.Count-1]).GetComponent<ZoneController>());
+  }
+
   private GameObject GenerateZoneFromExit(ZoneController zone) {
     HUB_POSITIONS exitPosition = zone.exitPosition;
     List<GameObject> eligibleZones = prefabs.FindAll((GameObject zonePrefab) => ZoneMatchEntrance(zonePrefab, exitPosition));
     GameObject newZonePrefab = eligibleZones[Random.Range(0, eligibleZones.Count)];
     GameObject newZone = GenerateZone(newZonePrefab);
     Vector3 newZonePosition = ComputeZonePositionFromHubs(zone, newZone.GetComponent<ZoneController>());
+    newZone.GetComponent<ZoneController>().generator = this;
     PositionZone(newZone, newZonePosition);
     return newZone;
   }
@@ -30,6 +36,7 @@ public class ZoneGenerator : MonoBehaviour {
     List<GameObject> eligibleZones = prefabs.FindAll((GameObject zonePrefab) => ZoneMatchEntrance(zonePrefab, HUB_POSITIONS.Bottom));
     GameObject newZonePrefab = eligibleZones[Random.Range(0, eligibleZones.Count)];
     GameObject newZone = GenerateZone(newZonePrefab);
+    newZone.GetComponent<ZoneController>().generator = this;
     PositionZone(newZone, new Vector3(0, 0, 1));
     return newZone;
   }
