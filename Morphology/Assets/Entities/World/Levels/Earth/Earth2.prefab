@@ -226,6 +226,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
+  entrancePosition: 2
+  exitPosition: 1
 --- !u!114 &114622677107435748
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3663,26 +3665,26 @@ Tilemap:
   - serializedVersion: 1
     m_DirtyIndex: 1
   - serializedVersion: 1
-    m_DirtyIndex: 1
+    m_DirtyIndex: 0
   - serializedVersion: 1
-    m_DirtyIndex: 1
-  - serializedVersion: 1
-    m_DirtyIndex: 3
-  - serializedVersion: 1
-    m_DirtyIndex: 1
+    m_DirtyIndex: 0
   - serializedVersion: 1
     m_DirtyIndex: 3
   - serializedVersion: 1
     m_DirtyIndex: 1
   - serializedVersion: 1
-    m_DirtyIndex: 1
-  - serializedVersion: 1
-    m_DirtyIndex: 1
-  - serializedVersion: 1
-    m_DirtyIndex: 1
-  - serializedVersion: 1
-    m_DirtyIndex: 1
-  - serializedVersion: 1
     m_DirtyIndex: 3
   - serializedVersion: 1
-    m_DirtyIndex: 1
+    m_DirtyIndex: 0
+  - serializedVersion: 1
+    m_DirtyIndex: 0
+  - serializedVersion: 1
+    m_DirtyIndex: 0
+  - serializedVersion: 1
+    m_DirtyIndex: 0
+  - serializedVersion: 1
+    m_DirtyIndex: 0
+  - serializedVersion: 1
+    m_DirtyIndex: 0
+  - serializedVersion: 1
+    m_DirtyIndex: 0
