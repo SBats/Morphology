@@ -73,34 +73,34 @@ public class ZoneGenerator : MonoBehaviour {
       return new Vector3(
         zoneAExitBounds.max.x + zoneBBounds.extents.x - 1,
         zoneAExitBounds.max.y - (zoneBBounds.extents.y - (zoneBBounds.max.y - zoneBEntranceBounds.max.y)) - 1,
-        zoneABounds.max.z
+        1
       );
     }
     if (zoneA.exitPosition == HUB_POSITIONS.Left) {
       return new Vector3(
         zoneAExitBounds.max.x - zoneBBounds.extents.x - 1,
         zoneAExitBounds.max.y - (zoneBBounds.extents.y - (zoneBBounds.max.y - zoneBEntranceBounds.max.y)) - 1,
-        zoneABounds.max.z
+        1
       );
     }
     if (zoneA.exitPosition == HUB_POSITIONS.Bottom) {
       return new Vector3(
         zoneAExitBounds.min.x + (zoneBBounds.extents.x - (zoneBEntranceBounds.min.x - zoneBBounds.min.x)) - 1,
         zoneAExitBounds.min.y - zoneBBounds.extents.y - 1,
-        zoneABounds.max.z
+        1
       );
     }
     if (zoneA.exitPosition == HUB_POSITIONS.Top) {
       return new Vector3(
         zoneAExitBounds.min.x + (zoneBBounds.extents.x - (zoneBEntranceBounds.min.x - zoneBBounds.min.x)) - 1,
         zoneAExitBounds.max.y + zoneBBounds.extents.y - 1,
-        zoneABounds.max.z
+        1
       );
     }
     return new Vector3(
       zoneABounds.max.x + zoneBBounds.extents.x - 1,
       zoneABounds.max.y - zoneBBounds.extents.y - 1,
-      zoneABounds.max.z
+      1
     );
   }
 }
