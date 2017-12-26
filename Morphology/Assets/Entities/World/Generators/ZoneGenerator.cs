@@ -6,7 +6,7 @@ using Morphology;
 public class ZoneGenerator : MonoBehaviour {
   public List<GameObject> prefabs;
 
-  private List<ZoneController> zonesList = new List<ZoneController>();
+  public List<ZoneController> zonesList = new List<ZoneController>();
   private int currentZone;
 
   private void Awake() {

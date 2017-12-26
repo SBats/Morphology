@@ -54,3 +54,8 @@ MonoBehaviour:
   prefabs:
   - {fileID: 1342470238584376, guid: fe4d12fc8daee4f709b7a403ca978083, type: 2}
   - {fileID: 1038596245796166, guid: 56b9cfe4a99194d679ee846ca2858eb4, type: 2}
+  - {fileID: 1705939307874144, guid: ed62da4c468bd4ab78a4c67738055f72, type: 2}
+  - {fileID: 1659494761411012, guid: b401a94e40a5c4f23bf23114e12fb51a, type: 2}
+  - {fileID: 1322845235851462, guid: 00f6ebb3cdd5f4157a950d6790dc5619, type: 2}
+  - {fileID: 1813503213520026, guid: c975b7fb316ed4fcabf6d13af94555ec, type: 2}
+  zonesList: []
