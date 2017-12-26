@@ -17,28 +17,62 @@ public class ZoneGenerator : MonoBehaviour {
   }
 
   private GameObject GenerateZoneFromExit(ZoneController zone) {
-    HUB_POSITIONS exitPosition = zone.getExitPosition();
+    HUB_POSITIONS exitPosition = zone.exitPosition;
     List<GameObject> eligibleZones = prefabs.FindAll((GameObject zonePrefab) => ZoneMatchEntrance(zonePrefab, exitPosition));
     GameObject newZonePrefab = eligibleZones[Random.Range(0, eligibleZones.Count)];
-    Vector3 newZonePosition = new Vector3(0, 0, 1);
-    return GenerateZone(newZonePrefab, newZonePosition);
+    GameObject newZone = GenerateZone(newZonePrefab);
+    Vector3 newZonePosition = ComputeZonePositionFromHubs(zone, newZone.GetComponent<ZoneController>());
+    PositionZone(newZone, newZonePosition);
+    return newZone;
   }
 
   private GameObject GenerateRandomZone() {
     GameObject newZonePrefab = prefabs[Random.Range(0, prefabs.Count)];
-    return GenerateZone(newZonePrefab, new Vector3(0, 0, 1));
+    GameObject newZone = GenerateZone(newZonePrefab);
+    PositionZone(newZone, new Vector3(0, 0, 1));
+    return newZone;
   }
 
-  private GameObject GenerateZone(GameObject prefab, Vector3 position) {
-    return Instantiate(prefab, position, Quaternion.identity);
+  private GameObject GenerateZone(GameObject prefab) {
+    return Instantiate(prefab, new Vector3(-1000, -1000, -1000), Quaternion.identity);
+  }
+
+  private void PositionZone(GameObject zone, Vector3 position) {
+    zone.transform.position = position;
   }
 
   private static bool ZoneMatchEntrance(GameObject zonePrefab, HUB_POSITIONS exitPosition) {
     var zone = zonePrefab.GetComponent<ZoneController>();
-    return zone.getEntrancePosition() == exitPosition;
+    if (exitPosition == HUB_POSITIONS.Bottom) return zone.entrancePosition == HUB_POSITIONS.Top;
+    if (exitPosition == HUB_POSITIONS.Top) return zone.entrancePosition == HUB_POSITIONS.Bottom;
+    if (exitPosition == HUB_POSITIONS.Left) return zone.entrancePosition == HUB_POSITIONS.Right;
+    if (exitPosition == HUB_POSITIONS.Right) return zone.entrancePosition == HUB_POSITIONS.Left;
+    return false;
   }
 
-  // private Vector3 getPositionFromZones(ZoneController previousZone, ZoneController newZone) {
-
-  // }
+  private Vector3 ComputeZonePositionFromHubs(ZoneController zoneA, ZoneController zoneB) {
+    Bounds zoneABounds = zoneA.GetBounds();
+    Bounds zoneAExitBounds = zoneA.GetExitBounds();
+    Bounds zoneBBounds = zoneB.GetBounds();
+    Bounds zoneBEntranceBounds = zoneB.GetEntranceBounds();
+    if (zoneA.exitPosition == HUB_POSITIONS.Right) {
+      return new Vector3(
+        zoneAExitBounds.max.x + zoneBBounds.extents.x - 1,
+        zoneAExitBounds.max.y - (zoneBBounds.extents.y - (zoneBBounds.max.y - zoneBEntranceBounds.max.y)) - 1,
+        zoneABounds.max.z
+      );
+    }
+    if (zoneA.exitPosition == HUB_POSITIONS.Bottom) {
+      return new Vector3(
+        zoneAExitBounds.min.x + (zoneBBounds.extents.x - (zoneBEntranceBounds.min.x - zoneBBounds.min.x)) - 1,
+        zoneAExitBounds.min.y - zoneBBounds.extents.y - 1,
+        zoneABounds.max.z
+      );
+    }
+    return new Vector3(
+      zoneABounds.max.x + zoneBBounds.extents.x - 1,
+      zoneABounds.max.y - zoneBBounds.extents.y - 1,
+      zoneABounds.max.z
+    );
+  }
 }
