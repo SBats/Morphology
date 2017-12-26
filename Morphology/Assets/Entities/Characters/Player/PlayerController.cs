@@ -79,6 +79,7 @@ public class PlayerController : MonoBehaviour {
 			Respawn ();
 		}
 		if (collider.tag == "Entrance") {
+			_spawnPosition = transform.position;
 			collider.GetComponent<EntranceController>().OnPlayerEnter();
 		}
 	}

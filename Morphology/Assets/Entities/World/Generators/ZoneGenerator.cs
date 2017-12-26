@@ -18,6 +18,12 @@ public class ZoneGenerator : MonoBehaviour {
 
   public void OnZoneEntered(ZoneController zone) {
     int zoneIndex = zonesList.FindIndex(listElement => listElement.GetInstanceID() == zone.GetInstanceID());
+    if (zoneIndex > 2) {
+      for (int i = 0; i < zoneIndex - 2; i++) {
+        Destroy(zonesList[0].gameObject);
+        zonesList.RemoveAt(0);
+      }
+    }
     zonesList.Add(GenerateZoneFromExit(zonesList[zonesList.Count-1]).GetComponent<ZoneController>());
   }
 
