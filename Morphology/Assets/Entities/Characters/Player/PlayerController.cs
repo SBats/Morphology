@@ -77,12 +77,20 @@ public class PlayerController : MonoBehaviour {
 	{
 		Debug.Log ("onTriggerEnterEvent: " + collider.name);
 		if (collider.tag == "KillPlane") {
-			gameController.GetComponent<GameController>().OnDeath();
-			gameObject.SetActive(false);
+			Die();
 		}
 		if (collider.tag == "Entrance") {
 			_spawnPosition = transform.position;
 			collider.GetComponent<EntranceController>().OnPlayerEnter();
+		}
+		if (collider.tag == "FireGate" && currentForm != FORMS.Fire) {
+			Die();
+		}
+		if (collider.tag == "WaterGate" && currentForm != FORMS.Water) {
+			Die();
+		}
+		if (collider.tag == "EarthGate" && currentForm != FORMS.Earth) {
+			Die();
 		}
 	}
 
@@ -210,6 +218,8 @@ public class PlayerController : MonoBehaviour {
 		_animator.SetFloat ("absolute_x_velocity", Mathf.Abs (_velocity.x));
 	}
 
+	#endregion
+
 	public void Respawn ()
 	{
 		transform.position = _spawnPosition;
@@ -219,6 +229,9 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
-	#endregion
+	public void Die() {
+		gameController.GetComponent<GameController>().OnDeath();
+		gameObject.SetActive(false);
+	}
 
 }

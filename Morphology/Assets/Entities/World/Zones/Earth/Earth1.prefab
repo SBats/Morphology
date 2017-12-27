@@ -158,7 +158,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1342470238584376}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalPosition: {x: -35.7, y: -14.23, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4624121429951842}
@@ -305,6 +305,7 @@ MonoBehaviour:
   type: 2
   entrancePosition: 0
   exitPosition: 3
+  generator: {fileID: 0}
 --- !u!19719996 &2113883506528242300
 TilemapCollider2D:
   m_ObjectHideFlags: 1
