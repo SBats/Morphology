@@ -177,6 +177,8 @@ MonoBehaviour:
   fireSprite: {fileID: 21300000, guid: 09a98af08e8ad4930aa683b638e6eec2, type: 3}
   waterSprite: {fileID: 21300000, guid: e813d32039e79498fbe9c64d4a95c1fb, type: 3}
   earthSprite: {fileID: 21300000, guid: 8b6fd282d4e604270b2b91c591781bd3, type: 3}
+  gameController: {fileID: 0}
+  actionButton: {fileID: 0}
 --- !u!212 &212144305435067580
 SpriteRenderer:
   m_ObjectHideFlags: 1

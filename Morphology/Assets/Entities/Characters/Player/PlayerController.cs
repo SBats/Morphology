@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour {
 	public Sprite waterSprite;
 	public Sprite earthSprite;
 	public GameObject gameController;
+	public TouchButton actionButton;
 
 	[HideInInspector]
 	private float normalizedHorizontalSpeed = 0;
@@ -31,6 +32,7 @@ public class PlayerController : MonoBehaviour {
 	private Button _fireButton;
 	private Button _waterButton;
 	private Button _earthButton;
+	private bool jumpRequested = false;
 
 
 	void Awake () {
@@ -140,6 +142,10 @@ public class PlayerController : MonoBehaviour {
 
 	#region Movements
 
+	public void RequestJump() {
+		if (_controller.isGrounded) jumpRequested = true;
+	}
+
 	private void Move ()
 	{
 		if (_controller.isGrounded) _velocity.y = 0;
@@ -152,7 +158,7 @@ public class PlayerController : MonoBehaviour {
 		if (jump > 0) _velocity.y = jump;
 
 		var gravity = GetGravity ();
-		if (!Input.GetButton ("Jump") && _velocity.y > 0) {
+		if (!getActionInput() && _velocity.y > 0) {
 			gravity *= jumpCancelFactor;
 		}
 
@@ -160,6 +166,7 @@ public class PlayerController : MonoBehaviour {
 
 		_controller.move (_velocity * Time.deltaTime);
 		_velocity = _controller.velocity;
+		jumpRequested = false;
 	}
 
 	private float GetHorizontalInput ()
@@ -167,10 +174,17 @@ public class PlayerController : MonoBehaviour {
 		return 1;
 	}
 
-	private float GetJump ()
-	{
-		if (!_controller.isGrounded || !Input.GetButtonDown ("Jump")) return 0;
+	private float GetJump () {
+		if (!_controller.isGrounded || !getActionInputDown()) return 0;
 		return Mathf.Sqrt (2f * jumpHeight * -gravity);
+	}
+
+	private bool getActionInputDown() {
+		return (jumpRequested || Input.GetButtonDown ("Jump"));
+	}
+
+	private bool getActionInput() {
+		return (actionButton.IsPressed() || Input.GetButton ("Jump"));
 	}
 
 	private float GetGravity ()

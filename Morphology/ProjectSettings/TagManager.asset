@@ -9,6 +9,9 @@ TagManager:
   - Generated
   - Entrance
   - Exit
+  - FireGate
+  - WaterGate
+  - EarthGate
   layers:
   - Default
   - TransparentFX
