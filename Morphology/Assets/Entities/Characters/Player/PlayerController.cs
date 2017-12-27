@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour {
 	public Sprite fireSprite;
 	public Sprite waterSprite;
 	public Sprite earthSprite;
+	public GameObject gameController;
 
 	[HideInInspector]
 	private float normalizedHorizontalSpeed = 0;
@@ -76,7 +77,8 @@ public class PlayerController : MonoBehaviour {
 	{
 		Debug.Log ("onTriggerEnterEvent: " + collider.name);
 		if (collider.tag == "KillPlane") {
-			Respawn ();
+			gameController.GetComponent<GameController>().OnDeath();
+			gameObject.SetActive(false);
 		}
 		if (collider.tag == "Entrance") {
 			_spawnPosition = transform.position;

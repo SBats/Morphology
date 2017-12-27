@@ -5,6 +5,7 @@ using Morphology;
 
 public class GameController : MonoBehaviour {
 
+  public GameObject uiController;
   public GameObject zoneGeneratorPrefab;
 
   private ZoneGenerator zoneGenerator;
@@ -22,6 +23,10 @@ public class GameController : MonoBehaviour {
   public void positionPlayer(ZoneController zone) {
     Vector3 position = zone.GetEntranceBounds().center;
     player.transform.position = position;
+  }
+
+  public void OnDeath() {
+    uiController.GetComponent<UIController>().EndGame();
   }
 
 }
