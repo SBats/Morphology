@@ -12,9 +12,11 @@ public class GameController : MonoBehaviour {
 
 
   private void Awake() {
+    Time.timeScale = 0.0f;
     player = GameObject.Find("Player").GetComponent<PlayerController>();
     zoneGenerator = Instantiate(zoneGeneratorPrefab, new Vector3(0, 0, 1), Quaternion.identity).GetComponent<ZoneGenerator>();
     positionPlayer(zoneGenerator.zonesList[0]);
+    Time.timeScale = 1.0f;
   }
 
   public void positionPlayer(ZoneController zone) {
