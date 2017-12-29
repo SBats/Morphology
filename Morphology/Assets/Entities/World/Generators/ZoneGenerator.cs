@@ -8,8 +8,10 @@ public class ZoneGenerator : MonoBehaviour {
 
   public List<ZoneController> zonesList = new List<ZoneController>();
   private int currentZone;
+  private GameObject grid;
 
   private void Awake() {
+    grid = GameObject.Find("Grid");
     zonesList.Add(GenerateStartZone().GetComponent<ZoneController>());
     currentZone = 0;
     zonesList.Add(GenerateZoneFromExit(zonesList[0]).GetComponent<ZoneController>());
@@ -48,7 +50,9 @@ public class ZoneGenerator : MonoBehaviour {
   }
 
   private GameObject GenerateZone(GameObject prefab) {
-    return Instantiate(prefab, new Vector3(-1000, -1000, -1000), Quaternion.identity);
+    GameObject newZone = Instantiate(prefab, new Vector3(-1000, -1000, -1000), Quaternion.identity);
+    newZone.transform.parent = grid.transform;
+    return newZone;
   }
 
   private void PositionZone(GameObject zone, Vector3 position) {
@@ -67,33 +71,37 @@ public class ZoneGenerator : MonoBehaviour {
   private Vector3 ComputeZonePositionFromHubs(ZoneController zoneA, ZoneController zoneB) {
     Bounds zoneABounds = zoneA.GetBounds();
     Bounds zoneAExitBounds = zoneA.GetExitBounds();
+    Vector3 zoneAExitPosition = zoneA.GetExitLocalPosition();
     Bounds zoneBBounds = zoneB.GetBounds();
     Bounds zoneBEntranceBounds = zoneB.GetEntranceBounds();
+    Vector3 zoneBEntrancePosition = zoneB.GetEntranceLocalPosition();
+    Debug.Log(zoneBEntrancePosition);
+    Debug.Log(zoneBEntranceBounds);
     if (zoneA.exitPosition == HUB_POSITIONS.Right) {
       return new Vector3(
-        zoneAExitBounds.max.x + zoneBBounds.extents.x - 1,
-        zoneAExitBounds.max.y - (zoneBBounds.extents.y - (zoneBBounds.max.y - zoneBEntranceBounds.max.y)) - 1,
+        zoneA.transform.position.x + zoneAExitPosition.x - zoneBEntrancePosition.x + zoneBEntranceBounds.size.x,
+        zoneA.transform.position.y + zoneAExitPosition.y - zoneBEntrancePosition.y,
         1
       );
     }
     if (zoneA.exitPosition == HUB_POSITIONS.Left) {
       return new Vector3(
-        zoneAExitBounds.max.x - zoneBBounds.extents.x - 1,
-        zoneAExitBounds.max.y - (zoneBBounds.extents.y - (zoneBBounds.max.y - zoneBEntranceBounds.max.y)) - 1,
+        zoneA.transform.position.x + zoneAExitPosition.x + zoneBEntrancePosition.x - zoneBEntranceBounds.size.x,
+        zoneA.transform.position.y + zoneAExitPosition.y - zoneBEntrancePosition.y,
         1
       );
     }
     if (zoneA.exitPosition == HUB_POSITIONS.Bottom) {
       return new Vector3(
-        zoneAExitBounds.min.x + (zoneBBounds.extents.x - (zoneBEntranceBounds.min.x - zoneBBounds.min.x)) - 1,
-        zoneAExitBounds.min.y - zoneBBounds.extents.y - 1,
+        zoneA.transform.position.x + zoneAExitPosition.x - zoneBEntrancePosition.x,
+        zoneA.transform.position.y + zoneAExitPosition.y - zoneBEntrancePosition.y - zoneBEntranceBounds.size.y,
         1
       );
     }
     if (zoneA.exitPosition == HUB_POSITIONS.Top) {
       return new Vector3(
-        zoneAExitBounds.min.x + (zoneBBounds.extents.x - (zoneBEntranceBounds.min.x - zoneBBounds.min.x)) - 1,
-        zoneAExitBounds.max.y + zoneBBounds.extents.y - 1,
+        zoneA.transform.position.x + zoneAExitPosition.x - zoneBEntrancePosition.x,
+        zoneA.transform.position.y + zoneAExitPosition.y - zoneBEntrancePosition.y + zoneBEntranceBounds.size.y,
         1
       );
     }
