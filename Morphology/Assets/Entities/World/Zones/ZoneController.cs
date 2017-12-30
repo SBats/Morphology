@@ -9,6 +9,8 @@ public class ZoneController : MonoBehaviour {
   public HUB_POSITIONS entrancePosition = HUB_POSITIONS.Left;
   public HUB_POSITIONS exitPosition = HUB_POSITIONS.Right;
   public ZoneGenerator generator;
+  public Vector3 entranceLocalPosition;
+  public Vector3 exitLocalPosition;
 
   private TilemapCollider2D tilemap;
   private EntranceController entrance;
@@ -19,7 +21,9 @@ public class ZoneController : MonoBehaviour {
   private void Awake() {
     tilemap = GetComponentInChildren<TilemapCollider2D>(true);
     entrance = GetComponentInChildren<EntranceController>(true);
+    entranceLocalPosition = entrance.transform.localPosition;
     exit = GetComponentInChildren<ExitController>(true);
+    exitLocalPosition = exit.transform.localPosition;
   }
 
   public Bounds GetBounds() {
@@ -30,16 +34,8 @@ public class ZoneController : MonoBehaviour {
     return entrance.getBounds();
   }
 
-  public Vector3 GetEntranceLocalPosition() {
-    return entrance.transform.localPosition;
-  }
-
   public Bounds GetExitBounds() {
     return exit.getBounds();
-  }
-
-  public Vector3 GetExitLocalPosition() {
-    return exit.transform.localPosition;
   }
 
   public void OnPlayerEnter() {
@@ -47,5 +43,9 @@ public class ZoneController : MonoBehaviour {
       entered = true;
       generator.OnZoneEntered(this);
     }
+  }
+
+  public void ResetZone() {
+    entered = false;
   }
 }

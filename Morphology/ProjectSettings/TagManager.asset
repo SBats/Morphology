@@ -12,6 +12,7 @@ TagManager:
   - FireGate
   - WaterGate
   - EarthGate
+  - Zone
   layers:
   - Default
   - TransparentFX
