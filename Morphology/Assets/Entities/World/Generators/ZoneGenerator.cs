@@ -9,51 +9,84 @@ public class ZoneGenerator : MonoBehaviour {
 
   private List<ZoneController> availableZones = new List<ZoneController>();
   private int currentZone;
+  private List<ZoneController> zonesToDelete = new List<ZoneController>();
+  private int zonesToCreate = 0;
+
+  private void FreeZone(ZoneController zone) {
+    int zoneIndex = zonesToDelete.FindIndex(listElement => listElement.GetInstanceID() == zone.GetInstanceID());
+    zone.ResetZone();
+    zonesToDelete.RemoveAt(0);
+    availableZones.Add(zone);
+  }
+
+  private void PlaceZone(ZoneController newZone, ZoneController previousZone) {
+    Vector3 newZonePosition = previousZone ? ComputeZonePositionFromHubs(previousZone, newZone.GetComponent<ZoneController>()) : new Vector3(0, 0, 1);
+    newZone.transform.position = newZonePosition;
+    zonesList.Add(newZone);
+  }
+
+  private IEnumerator CreateZones() {
+    while (true) {
+      if (zonesToCreate > 0) {
+        zonesToCreate--;
+        GenerateZone(zonesList[zonesList.Count-1]);
+      }
+      yield return new WaitForSeconds(.1f);
+    }
+  }
+
+  private IEnumerator DeleteZones() {
+    while (true) {
+      if (zonesToDelete.Count > 0) {
+        FreeZone(zonesToDelete[0]);
+      }
+      yield return new WaitForSeconds(.1f);
+    }
+  }
 
   private void Awake() {
     foreach (GameObject zoneObject in GameObject.FindGameObjectsWithTag("Zone")) {
-      zoneObject.SetActive(false);
       ZoneController zone = zoneObject.GetComponent<ZoneController>();
       zone.generator = this;
       availableZones.Add(zone);
     }
-    GenerateStartZone();
+    GenerateZone();
     currentZone = 0;
-    GenerateZoneFromExit(zonesList[0]);
-    GenerateZoneFromExit(zonesList[1]);
+    GenerateZone(zonesList[0]);
+    GenerateZone(zonesList[1]);
+    StartCoroutine("CreateZones");
+    StartCoroutine("DeleteZones");
   }
 
   public void OnZoneEntered(ZoneController zone) {
-    GenerateZoneFromExit(zonesList[zonesList.Count-1]);
     int zoneIndex = zonesList.FindIndex(listElement => listElement.GetInstanceID() == zone.GetInstanceID());
+    zonesToCreate++;
+    currentZone = zoneIndex;
     if (zoneIndex > 2) {
-      for (int i = 0; i < zoneIndex - 2; i++) {
-        zonesList[0].gameObject.SetActive(false);
-        zonesList[0].ResetZone();
-        zonesList.RemoveAt(0);
-        availableZones.Add(zonesList[0]);
-      }
+      zonesToDelete.Add(zonesList[0]);
+      zonesList.RemoveAt(0);
     }
   }
 
-  private void GenerateZoneFromExit(ZoneController previousZone) {
-    HUB_POSITIONS exitPosition = previousZone.exitPosition;
-    List<ZoneController> eligibleZones = availableZones.FindAll((ZoneController zone) => ZoneMatchEntrance(zone, exitPosition));
-    ZoneController newZone = eligibleZones[Random.Range(0, eligibleZones.Count)];
-    Vector3 newZonePosition = ComputeZonePositionFromHubs(previousZone, newZone.GetComponent<ZoneController>());
-    newZone.transform.position = newZonePosition;
-    newZone.gameObject.SetActive(true);
-    availableZones.Remove(newZone);
-    zonesList.Add(newZone);
+  private void GenerateZone(ZoneController previousZone = null) {
+    HUB_POSITIONS exitPosition = GetExitPosition(previousZone);
+    List<ZoneController> eligibleZones = GetEligibleZones(exitPosition);
+    ZoneController newZone = GetZoneFromList(eligibleZones);
+    PlaceZone(newZone, previousZone);
   }
 
-  private void GenerateStartZone() {
-    List<ZoneController> eligibleZones = availableZones.FindAll((ZoneController zone) => ZoneMatchEntrance(zone, HUB_POSITIONS.Bottom));
-    ZoneController newZone = eligibleZones[Random.Range(0, eligibleZones.Count)];
-    newZone.transform.position = new Vector3(0, 0, 1);
-    newZone.gameObject.SetActive(true);
-    availableZones.Remove(newZone);
-    zonesList.Add(newZone);
+  private List<ZoneController> GetEligibleZones(HUB_POSITIONS exitPosition) {
+    return availableZones.FindAll((ZoneController zone) => ZoneMatchEntrance(zone, exitPosition));
+  }
+
+  private HUB_POSITIONS GetExitPosition(ZoneController previousZone) {
+    return previousZone ? previousZone.exitPosition : HUB_POSITIONS.Bottom;
+  }
+
+  private ZoneController GetZoneFromList(List<ZoneController> list) {
+    ZoneController zone = list[Random.Range(0, list.Count)];
+    availableZones.Remove(zone);
+    return zone;
   }
 
   private static bool ZoneMatchEntrance(ZoneController zone, HUB_POSITIONS exitPosition) {

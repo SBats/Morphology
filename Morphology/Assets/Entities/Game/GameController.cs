@@ -17,13 +17,13 @@ public class GameController : MonoBehaviour {
     player = GameObject.Find("Player").GetComponent<PlayerController>();
     LoadZones();
     zoneGenerator = Instantiate(zoneGeneratorPrefab, new Vector3(0, 0, 1), Quaternion.identity).GetComponent<ZoneGenerator>();
-    positionPlayer(zoneGenerator.zonesList[0]);
     Time.timeScale = 1.0f;
+    positionPlayer(zoneGenerator.zonesList[0]);
   }
 
   public void positionPlayer(ZoneController zone) {
     Vector3 position = zone.GetEntranceBounds().center;
-    player.transform.position = position;
+    player.transform.position = position - player.GetComponent<BoxCollider2D>().bounds.size;
   }
 
   public void OnDeath() {

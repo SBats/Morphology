@@ -55,6 +55,8 @@ GameObject:
   - component: {fileID: 8195094281383216186}
   - component: {fileID: 3664157344697729668}
   - component: {fileID: 2113883504319207470}
+  - component: {fileID: 50727354106581674}
+  - component: {fileID: 66833542632727906}
   m_Layer: 8
   m_Name: Tilemap
   m_TagString: Untagged
@@ -134,6 +136,26 @@ Transform:
   m_Father: {fileID: 4521988902208374}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &50727354106581674
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1916741749165292}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!61 &61107246878422834
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -184,6 +206,26 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 5}
   m_EdgeRadius: 0
+--- !u!66 &66833542632727906
+CompositeCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1916741749165292}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_GeometryType: 0
+  m_GenerationType: 0
+  m_EdgeRadius: 0
+  m_ColliderPaths: []
+  m_CompositePaths:
+    m_Paths: []
+  m_VertexDistance: 0.0005
 --- !u!114 &114057828001339354
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -199,6 +241,8 @@ MonoBehaviour:
   entrancePosition: 2
   exitPosition: 0
   generator: {fileID: 0}
+  entranceLocalPosition: {x: 0, y: 0, z: 0}
+  exitLocalPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &114294143316623464
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -232,7 +276,7 @@ TilemapCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
 --- !u!483693784 &3664157344697729668
 TilemapRenderer:
