@@ -317,6 +317,7 @@ MonoBehaviour:
   type: 2
   entrancePosition: 0
   exitPosition: 3
+  mainTilemap: {fileID: 1711400575987348}
   generator: {fileID: 0}
   entranceLocalPosition: {x: 0, y: 0, z: 0}
   exitLocalPosition: {x: 0, y: 0, z: 0}

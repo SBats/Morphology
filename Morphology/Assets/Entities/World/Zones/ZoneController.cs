@@ -8,8 +8,12 @@ public class ZoneController : MonoBehaviour {
   public ZONE_TYPES type = ZONE_TYPES.Earth;
   public HUB_POSITIONS entrancePosition = HUB_POSITIONS.Left;
   public HUB_POSITIONS exitPosition = HUB_POSITIONS.Right;
+  public GameObject mainTilemap;
+  [HideInInspector]
   public ZoneGenerator generator;
+  [HideInInspector]
   public Vector3 entranceLocalPosition;
+  [HideInInspector]
   public Vector3 exitLocalPosition;
 
   private TilemapCollider2D tilemap;
@@ -19,10 +23,10 @@ public class ZoneController : MonoBehaviour {
   private bool entered;
 
   private void Awake() {
-    tilemap = GetComponentInChildren<TilemapCollider2D>(true);
-    entrance = GetComponentInChildren<EntranceController>(true);
+    tilemap = mainTilemap.GetComponentInChildren<TilemapCollider2D>();
+    entrance = GetComponentInChildren<EntranceController>();
     entranceLocalPosition = entrance.transform.localPosition;
-    exit = GetComponentInChildren<ExitController>(true);
+    exit = GetComponentInChildren<ExitController>();
     exitLocalPosition = exit.transform.localPosition;
   }
 
