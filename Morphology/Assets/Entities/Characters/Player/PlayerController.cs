@@ -56,8 +56,7 @@ public class PlayerController : MonoBehaviour {
 		SetFireForm();
 	}
 
-	void Update ()
-	{
+	void Update ()	{
 		Move ();
 		Render ();
 	}
@@ -75,8 +74,7 @@ public class PlayerController : MonoBehaviour {
 	// }
 
 
-	void onTriggerEnterEvent (Collider2D collider)
-	{
+	void onTriggerEnterEvent (Collider2D collider)	{
 		// Debug.Log ("onTriggerEnterEvent: " + collider.name);
 		if (collider.tag == "KillPlane") {
 			Die();
@@ -146,8 +144,7 @@ public class PlayerController : MonoBehaviour {
 		if (_controller.isGrounded) jumpRequested = true;
 	}
 
-	private void Move ()
-	{
+	private void Move ()	{
 		if (_controller.isGrounded) _velocity.y = 0;
 
 		var horizontalInput = GetHorizontalInput ();
@@ -169,8 +166,7 @@ public class PlayerController : MonoBehaviour {
 		jumpRequested = false;
 	}
 
-	private float GetHorizontalInput ()
-	{
+	private float GetHorizontalInput ()	{
 		return 1;
 	}
 
@@ -187,20 +183,17 @@ public class PlayerController : MonoBehaviour {
 		return (actionButton.IsPressed() || Input.GetButton ("Jump"));
 	}
 
-	private float GetGravity ()
-	{
+	private float GetGravity ()	{
 		return gravity * Time.deltaTime;
 	}
 
-	private float SmoothHorizontalSpeed (float speed)
-	{
+	private float SmoothHorizontalSpeed (float speed)	{
 		var smoothedMovementFactor = _controller.isGrounded ? groundDamping : inAirDamping; // how fast do we change direction?
 		var finalSpeed = speed * runSpeed;
 		return Mathf.Lerp (_velocity.x, finalSpeed, Time.deltaTime * smoothedMovementFactor);
 	}
 
-	private void HandleOneWayPlatforms ()
-	{
+	private void HandleOneWayPlatforms () {
 		if (_controller.isGrounded && Input.GetKey (KeyCode.DownArrow)) {
 			_velocity.y *= 3f;
 			_controller.ignoreOneWayPlatformsThisFrame = true;
@@ -212,8 +205,7 @@ public class PlayerController : MonoBehaviour {
 
 	#region Rendering
 
-	private void Render ()
-	{
+	private void Render () {
 		if (Mathf.Abs (_velocity.x) > 0.01f) {
 			transform.localScale = new Vector3 (
 			    Mathf.Sign (_velocity.x) * Mathf.Abs (transform.localScale.x),
@@ -224,18 +216,17 @@ public class PlayerController : MonoBehaviour {
 		updateAnimatorParameters ();
 	}
 
-	private void updateAnimatorParameters ()
-	{
+	private void updateAnimatorParameters () {
 		_animator.SetBool ("grounded", _controller.isGrounded);
 		_animator.SetFloat ("x_velocity", _velocity.x);
 		_animator.SetFloat ("y_velocity", _velocity.y);
 		_animator.SetFloat ("absolute_x_velocity", Mathf.Abs (_velocity.x));
+		_animator.SetInteger ("form", (int)currentForm);
 	}
 
 	#endregion
 
-	public void Respawn ()
-	{
+	public void Respawn () {
 		transform.position = _spawnPosition;
 		GameObject[] generators = GameObject.FindGameObjectsWithTag("Generator");
  		for (int i = 0; i < generators.Length - 1; i++) {
