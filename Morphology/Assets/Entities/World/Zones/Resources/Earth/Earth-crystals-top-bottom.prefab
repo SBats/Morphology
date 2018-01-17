@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 4828621274501266}
   - component: {fileID: 114165094160623526}
   m_Layer: 0
-  m_Name: Earth-top-bottomspikes
+  m_Name: Earth-crystals-top-bottom
   m_TagString: Zone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
