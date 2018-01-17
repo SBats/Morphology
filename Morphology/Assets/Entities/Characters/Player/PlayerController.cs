@@ -13,9 +13,6 @@ public class PlayerController : MonoBehaviour {
 	public float inAirDamping = 5f;
 	public float jumpHeight = 3f;
 	public float jumpCancelFactor = 3f;
-	public Sprite fireSprite;
-	public Sprite waterSprite;
-	public Sprite earthSprite;
 	public GameObject gameController;
 	public TouchButton actionButton;
 
@@ -129,13 +126,6 @@ public class PlayerController : MonoBehaviour {
 
 	public void ChangeForm (FORMS form) {
 		currentForm = form;
-		gameObject.GetComponent<SpriteRenderer>().sprite = GetSpriteFromForm(form);
-	}
-
-	private Sprite GetSpriteFromForm(FORMS form) {
-		if (form == FORMS.Water) return waterSprite;
-		if (form == FORMS.Earth) return earthSprite;
-		return fireSprite;
 	}
 
 	#endregion
@@ -186,7 +176,11 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	private float GetGravity ()	{
-		return gravity * Time.deltaTime;
+		float factor = 1;
+		if (_velocity.y <= 0) {
+			factor = 2;
+		}
+		return gravity * factor * Time.deltaTime;
 	}
 
 	private float SmoothHorizontalSpeed (float speed)	{

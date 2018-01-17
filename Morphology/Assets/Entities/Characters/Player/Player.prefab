@@ -39,7 +39,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1872496631867634}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1}
+  m_LocalPosition: {x: -18.03, y: 0.88, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -122,7 +122,7 @@ MonoBehaviour:
   _skinWidth: 0.02
   platformMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 3328
   triggerMask:
     serializedVersion: 2
     m_Bits: 4096
@@ -130,19 +130,19 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   slopeLimit: 60
-  jumpingThreshold: 0.07
+  jumpingThreshold: 0.5
   slopeSpeedMultiplier:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 2
-      time: 0
-      value: 1
+      time: 0.0041656494
+      value: 0.94937134
       inSlope: 0
       outSlope: 0
       tangentMode: 0
     - serializedVersion: 2
       time: 1
-      value: 1
+      value: 0.94937134
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -168,9 +168,6 @@ MonoBehaviour:
   inAirDamping: 5
   jumpHeight: 3
   jumpCancelFactor: 3
-  fireSprite: {fileID: 21300000, guid: 09a98af08e8ad4930aa683b638e6eec2, type: 3}
-  waterSprite: {fileID: 21300000, guid: e813d32039e79498fbe9c64d4a95c1fb, type: 3}
-  earthSprite: {fileID: 21300000, guid: 8b6fd282d4e604270b2b91c591781bd3, type: 3}
   gameController: {fileID: 0}
   actionButton: {fileID: 0}
 --- !u!212 &212144305435067580
