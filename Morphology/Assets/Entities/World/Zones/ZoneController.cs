@@ -30,6 +30,10 @@ public class ZoneController : MonoBehaviour {
     exitLocalPosition = exit.transform.localPosition;
   }
 
+  public void EnableTilemapCollider() {
+    tilemap.enabled = true;
+  }
+
   public Bounds GetBounds() {
     return tilemap.bounds;
   }

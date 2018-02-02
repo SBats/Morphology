@@ -73,6 +73,7 @@ public class ZoneGenerator : MonoBehaviour {
     List<ZoneController> eligibleZones = GetEligibleZones(exitPosition);
     ZoneController newZone = GetZoneFromList(eligibleZones);
     PlaceZone(newZone, previousZone);
+    newZone.EnableTilemapCollider();
   }
 
   private List<ZoneController> GetEligibleZones(HUB_POSITIONS exitPosition) {
